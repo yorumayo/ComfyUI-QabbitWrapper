@@ -1,0 +1,35 @@
+{
+    "ComfyUI-KJNodes": {
+        "nodes/image_nodes": [
+            "ImageResizeKJv2",
+            "ImageBatchMulti"
+        ],
+        "nodes/mask_nodes": [
+            "MaskBatchMulti"
+        ]
+    },
+    "ComfyUI-WanVideoWrapper": {
+        "nodes_model_loading": [
+            "LoadWanVideoT5TextEncoder",
+            "WanVideoVAELoader",
+            "WanVideoModelLoader",
+            "WanVideoLoraSelect",
+            "WanVideoBlockSwap",
+            "WanVideoVRAMManagement",
+            "WanVideoTorchCompileSettings"
+        ],
+        "nodes": [
+            "WanVideoTextEncode",
+            "WanVideoClipVisionEncode",
+            "WanVideoImageToVideoEncode",
+            "WanVideoDecode",
+            "WanVideoSetBlockSwap",
+            "WanVideoAddBindweaveEmbeds",
+            "WanVideoEncodeLatentBatch",
+            "TextImageEncodeQwenVL"
+        ],
+        "nodes_sampler": [
+            "WanVideoSampler"
+        ]
+    }
+}
