@@ -5,11 +5,11 @@
 """
 
 from qabbit_wrapper import init_comfy
-from nodes import LoadImage, CLIPLoader, CLIPVisionLoader
+init_comfy("/scratch/e1351271/comfy/ComfyUI")
+
+from qabbit_wrapper.nodes import LoadImage, CLIPLoader, CLIPVisionLoader
 from qabbit_wrapper.custom_nodes import CustomNodePackage
 
-# 初始化 ComfyUI（只需要一次）
-init_comfy("/scratch/e1351271/comfy/ComfyUI")
 
 # 创建 custom node 包包装器
 kj = CustomNodePackage("ComfyUI-KJNodes")
@@ -54,7 +54,6 @@ mask_batch_multi_node = MaskBatchMulti()
 t5_loader_node = LoadWanVideoT5TextEncoder()
 vae_loader_node = WanVideoVAELoader()
 model_loader_node = WanVideoModelLoader()
-# ... 其他节点实例化
 
 print("所有节点已成功导入和实例化！")
 print("现在可以使用这些节点了，就像在原来的 test.py 中一样。")

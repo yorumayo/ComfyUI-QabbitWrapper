@@ -12,13 +12,14 @@ Usage:
     ImageResizeKJv2 = get_custom_node("ComfyUI-KJNodes", "nodes/image_nodes", "ImageResizeKJv2")
 """
 
-from ..custom_nodes import (
+from ..custom_nodes_logic import (
     load_custom_node,
     get_custom_node,
     list_available_custom_nodes,
     get_loader,
     CustomNodeLoader
 )
+
 
 __all__ = [
     'load_custom_node',

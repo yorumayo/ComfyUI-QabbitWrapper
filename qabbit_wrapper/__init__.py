@@ -3,10 +3,10 @@ ComfyUI Qabbit Wrapper - A simple wrapper to use ComfyUI nodes in standalone Pyt
 
 Usage:
     from qabbit_wrapper import init_comfy
-    from nodes import LoadImage, CLIPLoader
+    from qabbit_wrapper.nodes import LoadImage, CLIPLoader
     
     # Initialize ComfyUI (only need to call once)
-    init_comfy()
+    init_comfy("/path/to/ComfyUI")
     
     # Now you can use nodes
     load_image = LoadImage()
@@ -14,9 +14,14 @@ Usage:
 """
 
 from .core import init_comfy, get_comfy_root, set_comfy_root
-from .nodes import *
-# Import from custom_nodes submodule (directory takes precedence over file)
-from .custom_nodes import CustomNodePackage, load_custom_node, get_custom_node
+from .custom_nodes_logic import load_custom_node, get_custom_node
+from .custom_nodes import CustomNodePackage
+
+
+# Auto-initialize if COMFY_ROOT environment variable is set
+import os
+if os.environ.get('COMFY_ROOT'):
+    init_comfy(os.environ.get('COMFY_ROOT'))
 
 __all__ = [
     'init_comfy',
@@ -26,9 +31,3 @@ __all__ = [
     'get_custom_node',
     'CustomNodePackage',
 ]
-
-# Auto-initialize if COMFY_ROOT environment variable is set
-import os
-if os.environ.get('COMFY_ROOT'):
-    init_comfy(os.environ.get('COMFY_ROOT'))
-

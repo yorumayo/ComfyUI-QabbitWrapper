@@ -18,14 +18,11 @@ ComfyUI-QabbitWrapper/
 ├── LICENSE                      # MIT 许可证
 ├── README.md                    # 项目主 README
 ├── INSTALL.md                   # 安装指南
-├── INSTALLATION_EXAMPLE.md      # 安装示例
 ├── USAGE_GUIDE.md               # 使用指南
-├── SUMMARY.md                   # 总结文档
 ├── example_simple.py            # 简单示例
 ├── example_usage.py             # 完整示例
 ├── example_refactored.py        # 重构示例
-├── test_wrapper.py              # 功能测试
-└── test_install.py              # 安装测试
+└── test_wrapper.py              # 功能测试
 ```
 
 ## 安装
@@ -66,6 +63,8 @@ load_image = LoadImage()
 - `README.md`: 项目主文档
 - `INSTALL.md`: 详细安装指南
 - `USAGE_GUIDE.md`: 使用指南
+- `STRUCTURE.md`: 项目结构说明
+
 - `qabbit_wrapper/README.md`: API 文档
 
 ### 示例文件
@@ -77,5 +76,5 @@ load_image = LoadImage()
 ### 测试文件
 
 - `test_wrapper.py`: 功能测试脚本
-- `test_install.py`: 安装验证脚本
+
 

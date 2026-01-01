@@ -57,3 +57,10 @@ ComfyUI-*/
 *.log
 *.tmp
 
+# Build artifacts
+
+*.egg-info/
+build/
+dist/
+
+

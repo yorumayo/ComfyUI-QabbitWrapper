@@ -137,6 +137,28 @@ class CustomNodeLoader:
         
         return python_package_name
     
+    def _ensure_parent_modules(self, full_module_name: str, package_path: str):
+        """Ensure all parent modules of a full module name exist in sys.modules."""
+        parts = full_module_name.split('.')
+        for i in range(1, len(parts)):
+            parent_name = '.'.join(parts[:i])
+            if parent_name not in sys.modules:
+                # Create a dummy module/package
+                module = type(sys)(parent_name)
+                # Try to determine path if it's within our package
+                # First part is always the alias like ComfyUI_KJNodes
+                rel_path = parts[1:i]
+                if rel_path:
+                    parent_path = os.path.join(package_path, *rel_path)
+                else:
+                    parent_path = package_path
+                
+                module.__path__ = [parent_path]
+                if os.path.exists(os.path.join(parent_path, "__init__.py")):
+                    module.__file__ = os.path.join(parent_path, "__init__.py")
+                
+                sys.modules[parent_name] = module
+
     def import_from_custom_node(self, package_name: str, module_path: str, class_name: str):
         """
         Import a class from a custom node package.
@@ -150,6 +172,7 @@ class CustomNodeLoader:
             The imported class
         """
         python_package_name = self.load_custom_node_package(package_name)
+        package_path = self._loaded_packages[python_package_name].__path__[0]
         
         # Convert module path to Python import path
         if "/" in module_path:
@@ -163,21 +186,27 @@ class CustomNodeLoader:
         
         full_module_name = f"{python_package_name}.{'.'.join(module_parts)}"
         
+        # Ensure parent modules exist
+        self._ensure_parent_modules(full_module_name, package_path)
+        
         # Try to load the module
         try:
             if full_module_name in sys.modules:
                 module = sys.modules[full_module_name]
             else:
                 # Load submodule
-                package_path = self._loaded_packages[python_package_name].__path__[0]
                 module_file = os.path.join(package_path, *module_parts) + ".py"
                 
                 if not os.path.exists(module_file):
-                    raise FileNotFoundError(f"Module file not found: {module_file}")
+                    # Try index file
+                    module_file = os.path.join(package_path, *module_parts, "__init__.py")
+                    if not os.path.exists(module_file):
+                        raise FileNotFoundError(f"Module file not found: {module_file}")
                 
                 spec = importlib.util.spec_from_file_location(full_module_name, module_file)
                 module = importlib.util.module_from_spec(spec)
-                module.__package__ = python_package_name
+                # Set __package__ to the parent module's name
+                module.__package__ = '.'.join(full_module_name.split('.')[:-1])
                 module.__name__ = full_module_name
                 sys.modules[full_module_name] = module
                 spec.loader.exec_module(module)
@@ -185,6 +214,7 @@ class CustomNodeLoader:
             raise ImportError(
                 f"Failed to import module {full_module_name} from package {package_name}: {e}"
             )
+
         
         # Import the class
         if not hasattr(module, class_name):

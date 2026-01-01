@@ -72,11 +72,18 @@ def init_comfy(comfy_root: Optional[str] = None) -> None:
             # Try to auto-detect: look for ComfyUI directory relative to this file
             current_file = os.path.abspath(__file__)
             current_dir = os.path.dirname(current_file)
-            # Go up from qabbit_wrapper/core.py to find ComfyUI
-            parent_dir = os.path.dirname(current_dir)
-            potential_comfy = os.path.join(parent_dir, "ComfyUI")
+            # Go up to project root
+            project_root = os.path.dirname(current_dir)
+            
+            # 1. Look inside project root (ComfyUI-QabbitWrapper/ComfyUI)
+            potential_comfy = os.path.join(project_root, "ComfyUI")
+            # 2. Look as a sibling (comfy/ComfyUI)
+            potential_sibling = os.path.join(os.path.dirname(project_root), "ComfyUI")
+            
             if os.path.exists(potential_comfy):
                 comfy_root = potential_comfy
+            elif os.path.exists(potential_sibling):
+                comfy_root = potential_sibling
             else:
                 raise ValueError(
                     "ComfyUI root directory not found. Please specify comfy_root parameter "

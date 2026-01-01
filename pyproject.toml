@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "comfyui-qabbit-wrapper"
@@ -25,11 +25,54 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
+dependencies = [
+    "torch",
+    "torchsde",
+    "torchvision",
+    "torchaudio",
+    "numpy>=1.25.0",
+    "einops",
+    "transformers>=4.50.3",
+    "tokenizers>=0.13.3",
+    "sentencepiece",
+    "safetensors>=0.4.2",
+    "aiohttp>=3.11.8",
+    "yarl>=1.18.0",
+    "pyyaml",
+    "Pillow",
+    "scipy",
+    "tqdm",
+    "psutil",
+    "alembic",
+    "SQLAlchemy",
+    "av>=14.2.0",
+    "kornia>=0.7.1",
+    "spandrel",
+    "pydantic~=2.0",
+    "pydantic-settings~=2.0",
+    "opencv-python",
+    "ftfy",
+    "regex",
+    "accelerate",
+    "diffusers",
+    "gguf",
+    "sentence-transformers",
+]
+
+
+
+
 [project.urls]
 Homepage = "https://github.com/yourusername/ComfyUI-QabbitWrapper"
 Documentation = "https://github.com/yourusername/ComfyUI-QabbitWrapper#readme"
 Repository = "https://github.com/yourusername/ComfyUI-QabbitWrapper"
 Issues = "https://github.com/yourusername/ComfyUI-QabbitWrapper/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["qabbit_wrapper"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"qabbit_wrapper/README.md" = "qabbit_wrapper/README.md"
 
 [tool.setuptools]
 packages = ["qabbit_wrapper"]
@@ -39,4 +82,5 @@ qabbit_wrapper = ["README.md"]
 
 [tool.setuptools.package-dir]
 "" = "."
+
 

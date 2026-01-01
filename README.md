@@ -14,7 +14,7 @@
 
 ## 安装
 
-### 方式 1：从源码安装（推荐）
+### 方式 1：使用 pip（推荐）
 
 ```bash
 # 进入项目目录
@@ -30,12 +30,14 @@ pip install .
 ### 方式 2：从本地目录安装
 
 ```bash
+# 使用 pip
 pip install /path/to/ComfyUI-QabbitWrapper
 ```
 
 详细安装说明请查看 [INSTALL.md](INSTALL.md)。
 
 ## 快速开始
+
 
 ```python
 from qabbit_wrapper import init_comfy
@@ -71,6 +73,7 @@ resize_node = ImageResizeKJv2()
 - [API 文档](qabbit_wrapper/README.md) - 详细的 API 文档
 - [安装指南](INSTALL.md) - 详细的安装说明
 - [目录结构](STRUCTURE.md) - 项目结构说明
+
 
 ## 示例
 
