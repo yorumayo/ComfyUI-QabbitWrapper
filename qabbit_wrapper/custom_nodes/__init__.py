@@ -12,6 +12,8 @@ Usage:
     ImageResizeKJv2 = get_custom_node("ComfyUI-KJNodes", "nodes/image_nodes", "ImageResizeKJv2")
 """
 
+import os
+import importlib
 from ..custom_nodes_logic import (
     load_custom_node,
     get_custom_node,
@@ -155,14 +157,37 @@ def load_nodes(config):
         with open(config, 'r') as f:
             config = json.load(f)
             
+    from ..core import get_comfy_root
+    comfy_root = get_comfy_root()
+    
     loaded_nodes = {}
     for package_name, modules in config.items():
-        pkg = CustomNodePackage(package_name)
-        for module_path, class_names in modules.items():
-            if isinstance(class_names, str):
-                class_names = [class_names]
-            for class_name in class_names:
-                loaded_nodes[class_name] = pkg.get(module_path, class_name)
+        # Check if it's a custom node package by looking in the custom_nodes directory
+        is_custom_pkg = os.path.exists(os.path.join(comfy_root, "custom_nodes", package_name))
+        
+        if is_custom_pkg:
+            pkg = CustomNodePackage(package_name)
+            for module_path, class_names in modules.items():
+                if isinstance(class_names, str):
+                    class_names = [class_names]
+                for class_name in class_names:
+                    loaded_nodes[class_name] = pkg.get(module_path, class_name)
+        else:
+            # Standard module import
+            for module_path, class_names in modules.items():
+                # In this case, package_name is the base module (e.g., 'comfy_extras')
+                # and module_path is the relative module path (e.g., 'nodes_lumina2')
+                if module_path:
+                    full_module_path = f"{package_name}.{module_path}"
+                else:
+                    full_module_path = package_name
+                    
+                module = importlib.import_module(full_module_path)
+                
+                if isinstance(class_names, str):
+                    class_names = [class_names]
+                for class_name in class_names:
+                    loaded_nodes[class_name] = getattr(module, class_name)
                 
     return loaded_nodes
 

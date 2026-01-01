@@ -40,10 +40,10 @@ setup(
     ],
     keywords="comfyui qabbit wrapper nodes ai image-generation",
     project_urls={
-        "Homepage": "https://github.com/yourusername/ComfyUI-QabbitWrapper",
-        "Documentation": "https://github.com/yourusername/ComfyUI-QabbitWrapper#readme",
-        "Repository": "https://github.com/yourusername/ComfyUI-QabbitWrapper",
-        "Issues": "https://github.com/yourusername/ComfyUI-QabbitWrapper/issues",
+        "Homepage": "https://github.com/yorumayo/ComfyUI-QabbitWrapper",
+        "Documentation": "https://github.com/yorumayo/ComfyUI-QabbitWrapper#readme",
+        "Repository": "https://github.com/yorumayo/ComfyUI-QabbitWrapper",
+        "Issues": "https://github.com/yorumayo/ComfyUI-QabbitWrapper/issues",
     },
 )
 
