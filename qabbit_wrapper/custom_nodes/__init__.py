@@ -27,7 +27,10 @@ __all__ = [
     'list_available_custom_nodes',
     'get_loader',
     'CustomNodeLoader',
+    'load_nodes',
 ]
+
+
 
 
 class CustomNodePackage:
@@ -134,4 +137,32 @@ def get_KJNodes():
 def get_WanVideoWrapper():
     """Get WanVideoWrapper package wrapper."""
     return CustomNodePackage("ComfyUI-WanVideoWrapper")
+
+
+def load_nodes(config):
+    """
+    Load multiple nodes based on a configuration dictionary or JSON file.
+    
+    Args:
+        config (dict or str): Path to a JSON file or a dictionary mapping 
+                             package names to module/class mappings.
+        
+    Returns:
+        dict: Mapping of class names to node classes.
+    """
+    if isinstance(config, str):
+        import json
+        with open(config, 'r') as f:
+            config = json.load(f)
+            
+    loaded_nodes = {}
+    for package_name, modules in config.items():
+        pkg = CustomNodePackage(package_name)
+        for module_path, class_names in modules.items():
+            if isinstance(class_names, str):
+                class_names = [class_names]
+            for class_name in class_names:
+                loaded_nodes[class_name] = pkg.get(module_path, class_name)
+                
+    return loaded_nodes
 
