@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "comfyui-qabbit-wrapper"
+version = "0.1.0"
+description = "A simple wrapper to use ComfyUI nodes in standalone Python scripts (Qabbit Wrapper)"
+readme = "qabbit_wrapper/README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    {name = "ComfyUI Qabbit Wrapper Contributors"}
+]
+keywords = ["comfyui", "qabbit", "wrapper", "nodes", "ai", "image-generation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/ComfyUI-QabbitWrapper"
+Documentation = "https://github.com/yourusername/ComfyUI-QabbitWrapper#readme"
+Repository = "https://github.com/yourusername/ComfyUI-QabbitWrapper"
+Issues = "https://github.com/yourusername/ComfyUI-QabbitWrapper/issues"
+
+[tool.setuptools]
+packages = ["qabbit_wrapper"]
+
+[tool.setuptools.package-data]
+qabbit_wrapper = ["README.md"]
+
+[tool.setuptools.package-dir]
+"" = "."
+
